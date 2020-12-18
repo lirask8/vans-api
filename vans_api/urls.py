@@ -1,4 +1,4 @@
-"""vans-api URL Configuration
+"""vans_api URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -22,11 +22,11 @@ from django.urls import include, re_path as path
 
 from django.views.static import serve
 
-from vans-api.settings import (
+from vans_api.settings import (
     STATIC_ROOT,
     MEDIA_ROOT,
 )
-from vans-api.views import index
+from vans_api.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
