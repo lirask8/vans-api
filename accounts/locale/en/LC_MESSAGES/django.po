@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-08 17:41+0000\n"
+"POT-Creation-Date: 2020-12-18 03:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,78 +43,70 @@ msgstr ""
 msgid "User inactive or deleted."
 msgstr ""
 
-#: accounts/models.py:36
+#: accounts/models.py:35
 msgid "User"
 msgstr "User"
 
-#: accounts/models.py:37
+#: accounts/models.py:36
 msgid "Users"
 msgstr "Users"
 
-#: accounts/models.py:65
+#: accounts/models.py:64
 msgid "Recovery token"
 msgstr ""
 
-#: accounts/models.py:66
+#: accounts/models.py:65
 msgid "Recovery tokens"
 msgstr ""
 
-#: accounts/models.py:79
-msgid "device"
-msgstr ""
-
-#: accounts/models.py:80
-msgid "devices"
-msgstr ""
-
-#: accounts/views.py:40 accounts/views.py:85
+#: accounts/views.py:35 accounts/views.py:69
 msgid "email is required "
 msgstr ""
 
-#: accounts/views.py:48
+#: accounts/views.py:43
 msgid "Email already in use"
 msgstr ""
 
-#: accounts/views.py:88
+#: accounts/views.py:72
 msgid "password is required "
 msgstr ""
 
-#: accounts/views.py:94
+#: accounts/views.py:78
 msgid "Invalid user  or wrong credentials"
 msgstr ""
 
-#: accounts/views.py:115
+#: accounts/views.py:96
 msgid "Email is required"
 msgstr ""
 
-#: accounts/views.py:121
+#: accounts/views.py:102
 msgid "Current user doesn't exist"
 msgstr ""
 
-#: accounts/views.py:145
+#: accounts/views.py:123
 msgid "We'll resend instructions to reset your password to email : "
 msgstr ""
 
-#: accounts/views.py:171
+#: accounts/views.py:146
 msgid "We send instructions to reset your password to email : "
 msgstr ""
 
-#: accounts/views.py:187
+#: accounts/views.py:162
 msgid "Must send token by queryparam '?token=yourtoken'"
 msgstr ""
 
-#: accounts/views.py:195
+#: accounts/views.py:170
 msgid "Token expired or doesn't exists"
 msgstr ""
 
-#: accounts/views.py:209
+#: accounts/views.py:184
 msgid "token field are required"
 msgstr ""
 
-#: accounts/views.py:214
+#: accounts/views.py:189
 msgid "newpassword field are required"
 msgstr ""
 
-#: accounts/views.py:221
+#: accounts/views.py:196
 msgid "Token doesn't exist or has expired"
 msgstr ""

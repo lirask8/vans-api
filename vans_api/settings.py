@@ -164,4 +164,4 @@ FRONTEND_PASSWORD_RESET = 'http://localhost/resetpassword/'
 EMAIL_BACKEND = os.environ.get('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 EMAIL_HOST = 'mailhog'
 EMAIL_PORT = 1025  # Work with MailHog
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', default='Support <support@broker.com>')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', default='Support <support@gmail.com>')
