@@ -88,25 +88,6 @@ class ListableStrPropsMixin(object):
         ]
 
 
-def register_device(model,user, fcmToken):
-    model.objects.filter(owner=user).delete()
-    device = get_object_or_none(model, owner=user,
-                                fcmToken=fcmToken)
-    if not device:
-        device = model(owner=user)
-
-    device.fcmToken = fcmToken
-    device.save()
-
-
-    devices = model.objects.filter(owner=user)
-    from .tasks import send_fcm_notification
-    send_fcm_notification.delay(
-        title='asdasd', body={},
-        #data=self.get_payload(order),
-        to=[device.fcmToken for device in devices])
-
-
 def unique_id():
     """Generate unique id"""
     return base64.urlsafe_b64encode(uuid.uuid4(

@@ -31,6 +31,10 @@ from vans_api.views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    #apps urls
+    path('api/v1/', include('accounts.urls')),
+    path('api/v1/', include('common.urls')),
+
     path('', index, name='index_view'),
 ]
 
