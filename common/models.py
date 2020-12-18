@@ -6,8 +6,8 @@ class BaseModel(models.Model):
     """Base model"""
 
     id = models.CharField(primary_key=True, max_length=22, editable=False)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
 
     def make_id(self):
         uid = unique_id()[::2]

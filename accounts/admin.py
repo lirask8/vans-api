@@ -8,7 +8,7 @@ class UserAdmin(admin.ModelAdmin):
         'id',
         'name',
         'email',
-        'created',
+        'created_at',
     )
 
 
