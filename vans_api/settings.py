@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     'common',
     'accounts',
+    'vans',
 ]
 
 MIDDLEWARE = [
