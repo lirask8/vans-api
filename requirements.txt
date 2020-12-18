@@ -6,11 +6,6 @@ Django==3.0.5
 psycopg2-binary==2.8.5  # https://github.com/psycopg/psycopg2
 
 #
-# I M A G E S
-#
-Pillow==7.1.2  # https://github.com/python-pillow/Pillow
-
-#
 # R E S T   A P I S
 #
 djangorestframework==3.10.3  # https://github.com/encode/django-rest-framework
