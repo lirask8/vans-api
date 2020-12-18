@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework_api_key',
+
+    'common',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +56,24 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'accounts.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'accounts.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        "rest_framework_api_key.permissions.HasAPIKey",
+    ),
+}
 
 ROOT_URLCONF = 'vans_api.urls'
 
@@ -134,3 +156,12 @@ MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 STATIC_URL = '/static/'
 STATIC_ROOT = 'collect_static'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'storage')
+
+FRONTEND_PASSWORD_RESET = 'http://localhost/resetpassword/'
+
+# EMAIL CONFIGURATION
+# ------------------------------------------------------------------------------
+EMAIL_BACKEND = os.environ.get('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = 'mailhog'
+EMAIL_PORT = 1025  # Work with MailHog
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', default='Support <support@gmail.com>')
