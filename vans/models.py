@@ -30,7 +30,14 @@ class Van(BaseModel):
     	'vans.Status',
     	verbose_name=_('Status'),
     	on_delete=models.PROTECT,
-    	null=True, blank=True
+    	null=True, blank=True,
+    )
+
+    created_by = models.ForeignKey(
+    	'accounts.User',
+    	verbose_name=_('Created by'),
+    	on_delete=models.PROTECT,
+    	null=True, 
     )
 
     def __str__(self):
