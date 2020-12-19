@@ -15,7 +15,7 @@ class VanService:
 
     @classmethod
     def create(cls, van_data, user):
-        """Register and validate a van."""
+        """Register and validate a Van."""
         van_plates = van_data['plates']
         van_economic_number = van_data['economic_number']
         van_seats = van_data['seats']
@@ -28,7 +28,8 @@ class VanService:
         if status:
             van = Van(
                 plates=van_plates,
-                economic_number=van_economic_number,
+                eco_num_prefix=van_economic_number,
+                eco_num_number=0,
                 seats=van_seats,
                 status=status,
                 created_by=user,
@@ -43,3 +44,8 @@ class VanService:
         """Validate Van's plates are unique."""
         if get_object_or_none(Van, plates=plates):
             raise serializers.ValidationError('Plates in use by another van.')
+
+    @classmethod
+    def _create_economic_number(cls, van_economic_number):
+        """Create the economic number"""
+        pass

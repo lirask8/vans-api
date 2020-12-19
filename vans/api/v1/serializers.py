@@ -4,10 +4,11 @@ from rest_framework import serializers
 from rest_framework.serializers import Serializer
 
 from vans.models import Van
+from vans.choices import EconomicTypes
 
 
 class VanSerializer(serializers.ModelSerializer):
-    """Helps to print the van info."""
+    """Helps to print the Van info."""
 
     status = serializers.SerializerMethodField()
 
@@ -26,9 +27,9 @@ class VanSerializer(serializers.ModelSerializer):
 
 
 class CreateVanSerializer(Serializer):
-    """Helps to validate the van data"""
+    """Helps to validate the Van data"""
 
     plates = serializers.RegexField(regex=r'^[A-Z0-9]{3}-[0-9]{3}$',required=True)
-    economic_number = serializers.RegexField(regex=r'^[A-Z0-9]{2}$',required=True)
+    economic_number = serializers.ChoiceField(choices=EconomicTypes.choices(), required=True)
     seats = serializers.IntegerField(required=True, min_value=1, max_value=25)
     status = serializers.CharField(required=True)
