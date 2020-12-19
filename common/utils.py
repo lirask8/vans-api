@@ -9,6 +9,8 @@ from django.utils import timezone
 from django.core.mail import EmailMessage
 from django.utils.translation import ugettext_lazy as _
 
+from rest_framework import status
+from rest_framework.response import Response
 
 
 class CommonMixin:
@@ -120,3 +122,7 @@ def update_element(new_value, elements):
         new_elements.append(old_element)
     new_list = list(new_elements)
     return tuple(new_list)
+
+def response_with_error_404():
+    message = {"error":"Van Not Found"} 
+    return Response(message, status=status.HTTP_404_NOT_FOUND)

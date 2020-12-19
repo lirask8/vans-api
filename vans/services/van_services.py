@@ -42,6 +42,7 @@ class VanService:
         van_plates = van_data['plates']
         van_seats = van_data['seats']
         van_status = van_data['status']
+        #TODO: update economic_number by PATCH to preserve idempotency
 
         if van.plates != van_plates:
             cls._validate_plates(van_plates)

@@ -9,7 +9,7 @@ from rest_framework_api_key.permissions import HasAPIKey
 from vans.models import Van
 from vans.api.v1.serializers import VanSerializer, CreateVanSerializer, UpdateVanSerializer
 from vans.services.van_services import VanService
-from common.utils import get_object_or_none
+from common.utils import get_object_or_none, response_with_error_404
 
 
 class VansView(APIView):
@@ -60,8 +60,7 @@ class VanView(APIView):
 			serializer = VanSerializer(van)
 			return Response(serializer.data)
 		else:
-			message = {"error":"Van Not Found"} 
-			return Response(message, status=status.HTTP_404_NOT_FOUND)
+			return response_with_error_404()
 
 	def put(self, request, uuid):
 		"""Update a van.
@@ -80,5 +79,16 @@ class VanView(APIView):
 
 			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 		else:
-			message = {"error":"Van Not Found"} 
-			return Response(message, status=status.HTTP_404_NOT_FOUND)
+			return response_with_error_404()
+
+	def delete(self, request, uuid):
+		"""Deletes a van.
+
+		DELETE /api/v1/vans/{uuid}/
+		"""
+		van = get_object_or_none(Van, id=uuid)
+		if van:
+			van.delete()
+			return Response(status=status.HTTP_204_NO_CONTENT)
+		else:
+			return response_with_error_404()
