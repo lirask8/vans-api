@@ -21,10 +21,11 @@ class VanService:
         van_seats = van_data['seats']
         van_status = van_data['status']
 
-        status = get_object_or_none(Status, code=van_data['status'])
+        cls._validate_plates(van_plates)
+
+        status = get_object_or_none(Status, code=van_status)
 
         if status:
-            
             van = Van(
                 plates=van_plates,
                 economic_number=van_economic_number,
@@ -33,13 +34,12 @@ class VanService:
                 created_by=user,
             )
             van.save()
-            
             return van
         else:
             raise serializers.ValidationError("Status doesn't exists.")
 
     @classmethod
     def _validate_plates(cls, plates):
-        """Validate Van's plates."""
-        pass
-
+        """Validate Van's plates are unique."""
+        if get_object_or_none(Van, plates=plates):
+            raise serializers.ValidationError('Plates in use by another van.')
