@@ -17,7 +17,7 @@ class VanService:
     def create(cls, van_data, user):
         """Register and validate a Van."""
         van_plates = van_data['plates']
-        van_economic_number = van_data['economic_number']
+        van_economic_number_prefix = van_data['economic_number']
         van_seats = van_data['seats']
         van_status = van_data['status']
 
@@ -25,11 +25,13 @@ class VanService:
 
         status = get_object_or_none(Status, code=van_status)
 
+        next_economic_number = cls._get_next_economic_number(van_economic_number_prefix)
+
         if status:
             van = Van(
                 plates=van_plates,
-                eco_num_prefix=van_economic_number,
-                eco_num_number=0,
+                eco_num_prefix=van_economic_number_prefix,
+                eco_num_number=next_economic_number,
                 seats=van_seats,
                 status=status,
                 created_by=user,
@@ -46,6 +48,11 @@ class VanService:
             raise serializers.ValidationError('Plates in use by another van.')
 
     @classmethod
-    def _create_economic_number(cls, van_economic_number):
-        """Create the economic number"""
-        pass
+    def _get_next_economic_number(cls, van_economic_number_prefix):
+        """Gets the next economic number for this prefix"""
+        van = Van.objects.filter(eco_num_prefix=van_economic_number_prefix).order_by('eco_num_number').last()
+        #import ipdb; ipdb.set_trace()
+        if van:
+            return van.eco_num_number + 1
+        else:
+            return 1    

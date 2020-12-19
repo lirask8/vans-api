@@ -49,7 +49,7 @@ class Van(BaseModel):
 
     @property
     def economic_number(self):
-        return self.eco_num_prefix + '-' + str(self.eco_num_number)
+        return self.eco_num_prefix + '-' + str(self.eco_num_number).zfill(4)
 
     def __str__(self):
         return self.plates
