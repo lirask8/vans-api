@@ -9,6 +9,7 @@ from rest_framework_api_key.permissions import HasAPIKey
 from vans.models import Van
 from vans.api.v1.serializers import VanSerializer, CreateVanSerializer
 from vans.services.van_services import VanService
+from common.utils import get_object_or_none
 
 
 class VansView(APIView):
@@ -41,3 +42,23 @@ class VansView(APIView):
     		created_van_serializer = VanSerializer(van)
     		return Response(created_van_serializer.data, status=status.HTTP_201_CREATED)
     	return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class VansDetailView(APIView):
+	"""Process the Van detail request."""
+
+	permission_classes = [IsAuthenticated | HasAPIKey]
+
+	def get(self, request, uuid):
+		"""Gets the van detail.
+
+		GET /api/v1/vans/{uuid}/
+		"""
+
+		van = get_object_or_none(Van, id=uuid)
+		if van:
+			serializer = VanSerializer(van)
+			return Response(serializer.data)
+		else:
+			message = {"error":"Van Not Found"} 
+			return Response(message, status=status.HTTP_404_NOT_FOUND)
