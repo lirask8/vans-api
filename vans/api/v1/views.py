@@ -24,7 +24,12 @@ class VansView(APIView):
         GET /api/v1/vans/
         """
 
-        vans = Van.objects.all()
+        status_param = self.request.query_params.get('status', None)
+
+        if status_param:
+            vans = Van.objects.filter(status__code=status_param)
+        else:
+        	vans = Van.objects.all()
 
         serializer = VanSerializer(vans, many=True)
 
