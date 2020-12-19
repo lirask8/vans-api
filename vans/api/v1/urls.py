@@ -2,7 +2,7 @@
 
 from django.urls import path
 
-from vans.api.v1.views import VansView, VansDetailView
+from vans.api.v1.views import VansView, VanView
 
 app_name = 'vans'
 urlpatterns = [
@@ -13,7 +13,7 @@ urlpatterns = [
     ),
     path(
         'vans/<str:uuid>/',
-        VansDetailView.as_view(),
+        VanView.as_view(),
         name='van-detail',
     ),
 ]

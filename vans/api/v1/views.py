@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_api_key.permissions import HasAPIKey
 
 from vans.models import Van
-from vans.api.v1.serializers import VanSerializer, CreateVanSerializer
+from vans.api.v1.serializers import VanSerializer, CreateVanSerializer, UpdateVanSerializer
 from vans.services.van_services import VanService
 from common.utils import get_object_or_none
 
@@ -44,7 +44,7 @@ class VansView(APIView):
     	return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class VansDetailView(APIView):
+class VanView(APIView):
 	"""Process the Van detail request."""
 
 	permission_classes = [IsAuthenticated | HasAPIKey]
@@ -59,6 +59,26 @@ class VansDetailView(APIView):
 		if van:
 			serializer = VanSerializer(van)
 			return Response(serializer.data)
+		else:
+			message = {"error":"Van Not Found"} 
+			return Response(message, status=status.HTTP_404_NOT_FOUND)
+
+	def put(self, request, uuid):
+		"""Update a van.
+
+		PUT /api/v1/vans/{uuid}/
+		"""
+
+		van = get_object_or_none(Van, id=uuid)
+		if van:
+			serializer = UpdateVanSerializer(data=request.data, context={'request': request})
+
+			if serializer.is_valid():
+				updated_van = VanService.update(serializer.validated_data, van)
+				updated_van_serializer = VanSerializer(updated_van)
+				return Response(updated_van_serializer.data, status=status.HTTP_200_OK)
+
+			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 		else:
 			message = {"error":"Van Not Found"} 
 			return Response(message, status=status.HTTP_404_NOT_FOUND)

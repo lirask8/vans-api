@@ -33,3 +33,11 @@ class CreateVanSerializer(Serializer):
     economic_number = serializers.ChoiceField(choices=EconomicTypes.choices(), required=True)
     seats = serializers.IntegerField(required=True, min_value=1, max_value=25)
     status = serializers.CharField(required=True)
+
+
+class UpdateVanSerializer(Serializer):
+    """Helps to validate the Van data"""
+
+    plates = serializers.RegexField(regex=r'^[A-Z0-9]{3}-[0-9]{3}$',required=True)
+    seats = serializers.IntegerField(required=True, min_value=1, max_value=25)
+    status = serializers.CharField(required=True)

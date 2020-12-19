@@ -22,30 +22,54 @@ class VanService:
         van_status = van_data['status']
 
         cls._validate_plates(van_plates)
-
-        status = get_object_or_none(Status, code=van_status)
-
+        status = cls._validate_status(van_status)
         next_economic_number = cls._get_next_economic_number(van_economic_number_prefix)
 
-        if status:
-            van = Van(
-                plates=van_plates,
-                eco_num_prefix=van_economic_number_prefix,
-                eco_num_number=next_economic_number,
-                seats=van_seats,
-                status=status,
-                created_by=user,
-            )
-            van.save()
-            return van
-        else:
-            raise serializers.ValidationError("Status doesn't exists.")
+        van = Van(
+            plates=van_plates,
+            eco_num_prefix=van_economic_number_prefix,
+            eco_num_number=next_economic_number,
+            seats=van_seats,
+            status=status,
+            created_by=user,
+        )
+        van.save()
+        return van
+
+    @classmethod
+    def update(cls, van_data, van):
+        """Update a Van."""
+        van_plates = van_data['plates']
+        van_seats = van_data['seats']
+        van_status = van_data['status']
+
+        if van.plates != van_plates:
+            cls._validate_plates(van_plates)
+
+        status = cls._validate_status(van_status)
+
+        van.plates=van_plates
+        van.seats=van_seats
+        van.status=status
+        van.save()
+
+        return van
 
     @classmethod
     def _validate_plates(cls, plates):
         """Validate Van's plates are unique."""
         if get_object_or_none(Van, plates=plates):
             raise serializers.ValidationError('Plates in use by another van.')
+
+    @classmethod
+    def _validate_status(cls, van_status):
+        """Validate Van's status."""
+        status = get_object_or_none(Status, code=van_status)
+        if status:
+            return status
+        else:
+            raise serializers.ValidationError("Status doesn't exists.")
+
 
     @classmethod
     def _get_next_economic_number(cls, van_economic_number_prefix):
