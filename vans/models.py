@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator
 from django.utils.translation import ugettext_lazy as _
 
 from common.models import BaseModel
+from vans.choices import EconomicTypes
 
 
 class Van(BaseModel):
@@ -15,9 +16,15 @@ class Van(BaseModel):
     	blank=False, null=False,
     )
 
-    economic_number = models.CharField(
-    	verbose_name=_('Economic Number'),
-    	max_length=7,
+    eco_num_prefix = models.CharField(
+    	verbose_name=_('Economic Number Prefix'),
+    	choices=EconomicTypes.choices(),
+    	max_length=2,
+    	blank=False, null=False,
+    )
+
+    eco_num_number = models.PositiveIntegerField(
+    	verbose_name=_('Economic Number Consecutive'),
     	blank=False, null=False,
     )
 
@@ -30,8 +37,19 @@ class Van(BaseModel):
     	'vans.Status',
     	verbose_name=_('Status'),
     	on_delete=models.PROTECT,
-    	null=True, blank=True
+    	null=True, blank=True,
     )
+
+    created_by = models.ForeignKey(
+    	'accounts.User',
+    	verbose_name=_('Created by'),
+    	on_delete=models.PROTECT,
+    	null=True, 
+    )
+
+    @property
+    def economic_number(self):
+        return self.eco_num_prefix + '-' + str(self.eco_num_number).zfill(4)
 
     def __str__(self):
         return self.plates
