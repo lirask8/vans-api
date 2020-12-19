@@ -7,7 +7,7 @@ from dateutil.relativedelta import relativedelta
 
 from rest_framework import serializers
 
-from vans.models import Van, Status
+from vans.models import Van, Status, Log
 from common.utils import get_object_or_none
 
 class VanService:
@@ -34,14 +34,16 @@ class VanService:
             created_by=user,
         )
         van.save()
+        cls.log_event(user, van, None, status)
         return van
 
     @classmethod
-    def update(cls, van_data, van):
+    def update(cls, van_data, van, user):
         """Update a Van."""
         van_plates = van_data['plates']
         van_seats = van_data['seats']
         van_status = van_data['status']
+        initial_status = van.status
         #TODO: update economic_number by PATCH to preserve idempotency
 
         if van.plates != van_plates:
@@ -53,6 +55,8 @@ class VanService:
         van.seats=van_seats
         van.status=status
         van.save()
+
+        cls.log_event(user, van, initial_status, status)
 
         return van
 
@@ -80,4 +84,14 @@ class VanService:
         if van:
             return van.eco_num_number + 1
         else:
-            return 1    
+            return 1
+
+    @classmethod
+    def log_event(cls, user, van, initial_status, final_status):
+        log = Log(
+            user=user,
+            van=van,
+            initial_status=initial_status,
+            final_status=final_status,
+        )
+        log.save()

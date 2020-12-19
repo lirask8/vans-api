@@ -6,10 +6,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_api_key.permissions import HasAPIKey
 
-from vans.models import Van
+from vans.models import Van, Status
 from vans.api.v1.serializers import VanSerializer, CreateVanSerializer, UpdateVanSerializer
 from vans.services.van_services import VanService
 from common.utils import get_object_or_none, response_with_error_404
+from vans.services.van_services import VanService
 
 
 class VansView(APIView):
@@ -73,7 +74,7 @@ class VanView(APIView):
 			serializer = UpdateVanSerializer(data=request.data, context={'request': request})
 
 			if serializer.is_valid():
-				updated_van = VanService.update(serializer.validated_data, van)
+				updated_van = VanService.update(serializer.validated_data, van, request.user)
 				updated_van_serializer = VanSerializer(updated_van)
 				return Response(updated_van_serializer.data, status=status.HTTP_200_OK)
 
@@ -88,7 +89,13 @@ class VanView(APIView):
 		"""
 		van = get_object_or_none(Van, id=uuid)
 		if van:
-			van.delete()
+			initial_status = van.status
+			inactive_status = get_object_or_none(Status, code='04')
+			van.status = inactive_status
+			van.save()
+
+			VanService.log_event(request.user, van, initial_status, inactive_status)
+
 			return Response(status=status.HTTP_204_NO_CONTENT)
 		else:
 			return response_with_error_404()
