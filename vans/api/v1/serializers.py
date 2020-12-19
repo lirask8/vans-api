@@ -23,3 +23,12 @@ class VanSerializer(serializers.ModelSerializer):
             'seats',
             'status',
         )
+
+
+class CreateVanSerializer(Serializer):
+    """Helps to validate the van data"""
+
+    plates = serializers.RegexField(regex=r'^[A-Z0-9]{3}-[0-9]{3}$',required=True)
+    economic_number = serializers.RegexField(regex=r'^[A-Z0-9]{2}$',required=True)
+    seats = serializers.IntegerField(required=True, min_value=1, max_value=25)
+    status = serializers.CharField(required=True)
