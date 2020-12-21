@@ -79,3 +79,16 @@ class VansTests(TestDoublesMixin, APITestCase):
         errors = response.json()
         self.assertBadRequest(response)
         self.assertEquals('This value does not match the required pattern.', errors['plates'][0])
+
+    def test_register_van_invalid_economic_number_choice(self):
+        request_url = self.make_request_url_vans()
+        response = self.post(
+            url=request_url,
+            data=self.register_van_payload(economic_number="G4"),
+            is_authenticated=True,
+            format='json',
+        )
+
+        errors = response.json()
+        self.assertBadRequest(response)
+        self.assertIn('is not a valid choice', errors['economic_number'][0])
