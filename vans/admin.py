@@ -30,6 +30,8 @@ class LogAdmin(admin.ModelAdmin):
         'created_at',
     )
 
+#TODO: Add Admin (front) validations
+
 
 admin.site.register(Van, VanAdmin)
 admin.site.register(Status, StatusAdmin)
