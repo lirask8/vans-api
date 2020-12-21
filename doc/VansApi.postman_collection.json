@@ -1,0 +1,421 @@
+{
+	"info": {
+		"_postman_id": "3fbadf38-833b-4fe4-bc17-415d098cf8c6",
+		"name": "Vans Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "accounts",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Marco\",\n\t\"lastName\":\"Lopez\",\n\t\"email\":\"marco@gmail.com\",\n\t\"password\":\"Pass2030\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/accounts/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"marco@gmail.com\",\n\t\"password\":\"Pass2030\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/accounts/signin",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdFV5UXUxRDh5YiIsImlhdCI6MTYwODI2MzU2MCwiZXhwIjoxNjM5NzEzMTYwfQ.RKukySL9UA3fgtkl3497-6WCHT1iHqSIKeNQwQh55W4"
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/v1/accounts/me",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "es"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"marco@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/accounts/password/forgot",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"password",
+								"forgot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"token\":\"bf4e65315e12efd8a939041bec9bbd8839fcb7b3\",\n\t\"newpassword\":\"Pass2030\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/accounts/password/reset",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"password",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "vans",
+			"item": [
+				{
+					"name": "All Vans",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdFV5UXUxRDh5YiIsImlhdCI6MTYwODI2Mzc0MywiZXhwIjoxNjM5NzEzMzQzfQ.YtR2ajszAfB8nBBgWOiH_AC5zUp1_Ft71KJLq1IIdh0"
+							},
+							{
+								"key": "Authorization",
+								"value": "Api-Key eDrAntri.ddh7xnqBql1YkhJwzJOc4xOlSwfsTjlW",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/v1/vans",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"vans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Van",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdFV5UXUxRDh5YiIsImlhdCI6MTYwODI2Mzc0MywiZXhwIjoxNjM5NzEzMzQzfQ.YtR2ajszAfB8nBBgWOiH_AC5zUp1_Ft71KJLq1IIdh0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"plates\": \"AW3-151\",\n    \"economic_number\": \"A1\", \n    \"seats\": 15, \n    \"status\": \"01\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/vans",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"vans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Van Detail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdFV5UXUxRDh5YiIsImlhdCI6MTYwODI2Mzc0MywiZXhwIjoxNjM5NzEzMzQzfQ.YtR2ajszAfB8nBBgWOiH_AC5zUp1_Ft71KJLq1IIdh0"
+							},
+							{
+								"key": "Authorization",
+								"value": "Api-Key eDrAntri.ddh7xnqBql1YkhJwzJOc4xOlSwfsTjlW",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/v1/vans/nbfmRGGBI5Z",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"vans",
+								"nbfmRGGBI5Z"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Van",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdFV5UXUxRDh5YiIsImlhdCI6MTYwODI2Mzc0MywiZXhwIjoxNjM5NzEzMzQzfQ.YtR2ajszAfB8nBBgWOiH_AC5zUp1_Ft71KJLq1IIdh0"
+							},
+							{
+								"key": "Authorization",
+								"value": "Api-Key eDrAntri.ddh7xnqBql1YkhJwzJOc4xOlSwfsTjlW",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"plates\": \"AW3-131\",\n    \"seats\": 4, \n    \"status\": \"02\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8000/api/v1/vans/nbfmRGGBI5Z",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"vans",
+								"nbfmRGGBI5Z"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Van",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdFV5UXUxRDh5YiIsImlhdCI6MTYwODI2Mzc0MywiZXhwIjoxNjM5NzEzMzQzfQ.YtR2ajszAfB8nBBgWOiH_AC5zUp1_Ft71KJLq1IIdh0"
+							},
+							{
+								"key": "Authorization",
+								"value": "Api-Key eDrAntri.ddh7xnqBql1YkhJwzJOc4xOlSwfsTjlW",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/v1/vans/nbfmRGGBI5Z",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"vans",
+								"nbfmRGGBI5Z"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vans by status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdFV5UXUxRDh5YiIsImlhdCI6MTYwODI2Mzc0MywiZXhwIjoxNjM5NzEzMzQzfQ.YtR2ajszAfB8nBBgWOiH_AC5zUp1_Ft71KJLq1IIdh0"
+							},
+							{
+								"key": "Authorization",
+								"value": "Api-Key eDrAntri.ddh7xnqBql1YkhJwzJOc4xOlSwfsTjlW",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8000/api/v1/vans?status=01",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"vans"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "01"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2ddeeb02-6cb6-4a75-9f74-13ba08710bf0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "68ca2346-708f-4dbe-af0f-fb712874effc",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
