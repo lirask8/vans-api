@@ -142,3 +142,23 @@ class VansTests(TestDoublesMixin, APITestCase):
         self.assertIsInstance(response_json, dict)
         self.assertIn('id', response_json)
         self.assertEquals(Van.objects.count(), 1)
+
+    def test_register_van_validate_next_economic_number(self):
+        request_url = self.make_request_url_vans()
+        status = StatusFactory()
+        van = VanFactory() #A1-0001
+        response = self.post(
+            url=request_url,
+            data=self.register_van_payload(status=status.code),
+            is_authenticated=True,
+            format='json',
+        )
+
+        response_json = response.json()
+        self.assertCreated(response)
+        self.assertIsInstance(response_json, dict)
+        self.assertIn('id', response_json)
+        self.assertEquals(Van.objects.count(), 2)
+        self.assertEquals(response_json['economic_number'], "A1-0002")
+
+    
