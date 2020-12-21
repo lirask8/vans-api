@@ -10,8 +10,8 @@ fake = Factory.create()
 
 class StatusFactory(factory.DjangoModelFactory):
 
-	code = '01'
-	name = 'status_name'
+	code = factory.LazyFunction(fake.word)
+	name = factory.LazyFunction(fake.word)
 
 	class Meta:
 		model = Status
