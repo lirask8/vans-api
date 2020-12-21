@@ -92,3 +92,18 @@ class VansTests(TestDoublesMixin, APITestCase):
         errors = response.json()
         self.assertBadRequest(response)
         self.assertIn('is not a valid choice', errors['economic_number'][0])
+
+    def test_register_van_duplicated_plates(self):
+        request_url = self.make_request_url_vans()
+        van = VanFactory()
+        registered_plates = van.plates
+        response = self.post(
+            url=request_url,
+            data=self.register_van_payload(plates=registered_plates),
+            is_authenticated=True,
+            format='json',
+        )
+
+        errors = response.json()
+        self.assertBadRequest(response)
+        self.assertIn('Plates in use by another van.', errors)
