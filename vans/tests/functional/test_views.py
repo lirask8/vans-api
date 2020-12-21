@@ -16,6 +16,8 @@ from vans.tests.factories.log import LogFactory
 @pytest.mark.django_db
 class VansTests(TestDoublesMixin, APITestCase):
 
+    ### Utils 
+
     @classmethod
     def make_request_url_vans(cls):
         return reverse('api:v1:vans')
@@ -28,6 +30,8 @@ class VansTests(TestDoublesMixin, APITestCase):
             "seats": seats, 
             "status": status
         }
+
+    ### GET vans
 
     def test_get_vans_credentials_required(self):
         request_url = self.make_request_url_vans()
@@ -48,6 +52,8 @@ class VansTests(TestDoublesMixin, APITestCase):
         self.assertEqual(len(vans_json), 1)
         van_response = vans_json[0]
         self.assertEqual(van_response['plates'], van.plates)
+
+    ### POST van 
 
     def test_register_van_credentials_required(self):
         request_url = self.make_request_url_vans()
@@ -107,3 +113,32 @@ class VansTests(TestDoublesMixin, APITestCase):
         errors = response.json()
         self.assertBadRequest(response)
         self.assertIn('Plates in use by another van.', errors)
+
+    def test_register_van_status_unknown(self):
+        request_url = self.make_request_url_vans()
+        response = self.post(
+            url=request_url,
+            data=self.register_van_payload(status="77"),
+            is_authenticated=True,
+            format='json',
+        )
+
+        errors = response.json()
+        self.assertBadRequest(response)
+        self.assertIn("Status doesn't exists.", errors)
+
+    def test_register_van(self):
+        request_url = self.make_request_url_vans()
+        status = StatusFactory()
+        response = self.post(
+            url=request_url,
+            data=self.register_van_payload(status=status.code),
+            is_authenticated=True,
+            format='json',
+        )
+
+        response_json = response.json()
+        self.assertCreated(response)
+        self.assertIsInstance(response_json, dict)
+        self.assertIn('id', response_json)
+        self.assertEquals(Van.objects.count(), 1)
