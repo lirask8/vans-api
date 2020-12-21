@@ -103,12 +103,22 @@ class APITestCase(TestUtilsMixin, BaseAPITestCase):
             return self.auth_client.get(path=url, data=data, **extra)
         return self.client.get(path=url, data=data, **extra)
 
+    def put(self, url=None, data=None, is_authenticated=False,
+            use_api_key=False, **extra):
+        if is_authenticated:
+            self._attach_api_key_header(use_api_key)
+            return self.auth_client.put(path=url, data=data, **extra)
+        return self.client.put(path=url, data=data, **extra)
+
     def get_failed(self, url=None, data=None, **extra):
         return self.failed_client.get(path=url, data=data, **extra)
 
     def post_failed(self, url=None, data=None, headers=None):
         headers = headers or {}
         return self.failed_client.post(path=url, data=data, **headers)
+
+    def put_failed(self, url=None, data=None, **extra):
+        return self.failed_client.put(path=url, data=data, **extra)
 
     def _attach_api_key_header(self, use_api_key=False):
         if use_api_key:

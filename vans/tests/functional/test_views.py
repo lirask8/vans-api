@@ -185,3 +185,21 @@ class VansTests(TestDoublesMixin, APITestCase):
         self.assertEquals(Van.objects.count(), 2)
         self.assertEquals(response_json['economic_number'], "A1-0002")
 
+    ### PUT van
+
+    def test_update_van_credentials_required(self):
+        request_url = self.make_request_url_van(van_uuid="fake_id")
+        self.assertAuthenticatedPUT(request_url)
+
+    def test_update_van_parameters_missing(self):
+        van = VanFactory()
+        request_url = self.make_request_url_van(van_uuid=van.id)
+        response = self.put(
+            request_url,
+            is_authenticated=True,
+            use_api_key=True
+        )
+
+        errors = response.json()
+        self.assertBadRequest(response)
+        self.assertEquals({'plates', 'seats', 'status'}, set(errors.keys()))
