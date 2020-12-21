@@ -238,3 +238,35 @@ class VansTests(TestDoublesMixin, APITestCase):
         self.assertEquals(response_json['id'], van.id)
         self.assertEquals(response_json['plates'], "BBB-001")
         self.assertEquals(response_json['seats'], 18)
+
+    ### DELETE van
+
+    def test_delete_van_credentials_required(self):
+        request_url = self.make_request_url_van(van_uuid="fake_id")
+        self.assertAuthenticatedDELETE(request_url)
+
+    def test_delete_van_invalid_id(self):
+        request_url = self.make_request_url_van(van_uuid="fake_id")
+        response = self.delete(
+            request_url,
+            is_authenticated=True,
+            use_api_key=True
+        )
+
+        errors = response.json()
+        self.assertNotFound(response)
+        self.assertEquals('Van Not Found', errors['error'])
+
+    def test_delete_van(self):
+        van = VanFactory()
+        inactive_status = StatusFactory(code="04") 
+        request_url = self.make_request_url_van(van_uuid=van.id)
+        response = self.delete(
+            url=request_url,
+            is_authenticated=True,
+            format='json',
+        )
+
+        van.refresh_from_db()
+        self.assertEquals(van.status.code, inactive_status.code)
+        self.assertNotContent(response)

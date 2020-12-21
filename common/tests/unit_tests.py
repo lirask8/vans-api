@@ -110,6 +110,13 @@ class APITestCase(TestUtilsMixin, BaseAPITestCase):
             return self.auth_client.put(path=url, data=data, **extra)
         return self.client.put(path=url, data=data, **extra)
 
+    def delete(self, url=None, data=None, is_authenticated=False,
+            use_api_key=False, **extra):
+        if is_authenticated:
+            self._attach_api_key_header(use_api_key)
+            return self.auth_client.delete(path=url, data=data, **extra)
+        return self.client.delete(path=url, data=data, **extra)
+
     def get_failed(self, url=None, data=None, **extra):
         return self.failed_client.get(path=url, data=data, **extra)
 
@@ -119,6 +126,9 @@ class APITestCase(TestUtilsMixin, BaseAPITestCase):
 
     def put_failed(self, url=None, data=None, **extra):
         return self.failed_client.put(path=url, data=data, **extra)
+
+    def delete_failed(self, url=None, data=None, **extra):
+        return self.failed_client.delete(path=url, data=data, **extra)
 
     def _attach_api_key_header(self, use_api_key=False):
         if use_api_key:
@@ -183,6 +193,9 @@ class APITestCase(TestUtilsMixin, BaseAPITestCase):
 
     def assertOk(self, response):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def assertNotContent(self, response):
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def assertCreated(self, response):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
