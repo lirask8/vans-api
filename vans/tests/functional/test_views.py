@@ -48,3 +48,34 @@ class VansTests(TestDoublesMixin, APITestCase):
         self.assertEqual(len(vans_json), 1)
         van_response = vans_json[0]
         self.assertEqual(van_response['plates'], van.plates)
+
+    def test_register_van_credentials_required(self):
+        request_url = self.make_request_url_vans()
+        self.assertAuthenticatedPOST(request_url)
+
+    def test_register_van_parameters_missing(self):
+        request_url = self.make_request_url_vans()
+        response = self.post(
+            url=request_url,
+            data={},
+            is_authenticated=True,
+            use_api_key=True,
+            content_type='application/json'
+        )
+
+        errors = response.json()
+        self.assertBadRequest(response)
+        self.assertEquals({'plates', 'economic_number', 'seats', 'status'}, set(errors.keys()))
+
+    def test_register_van_invalid_plates_format(self):
+        request_url = self.make_request_url_vans()
+        response = self.post(
+            url=request_url,
+            data=self.register_van_payload(plates="AAAA"),
+            is_authenticated=True,
+            format='json',
+        )
+
+        errors = response.json()
+        self.assertBadRequest(response)
+        self.assertEquals('This value does not match the required pattern.', errors['plates'][0])
