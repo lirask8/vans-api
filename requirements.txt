@@ -14,6 +14,12 @@ PyJWT==1.7.1
 
 
 #
+# C A C H I N G
+#
+redis==3.5.2  # https://github.com/antirez/redis
+django-redis==4.11.0  # https://github.com/niwinz/django-redis
+
+#
 # U T I L I T I E S
 #
 requests==2.22.0

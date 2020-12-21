@@ -101,7 +101,7 @@ class Log(BaseModel):
 	van = models.ForeignKey(
 		'vans.Van',
 		verbose_name=_('Van'),
-		on_delete=models.PROTECT,
+		on_delete=models.CASCADE,
 		null=False, blank=False
 	)
 

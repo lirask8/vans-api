@@ -12,12 +12,16 @@ from vans.services.van_services import VanService
 from common.utils import get_object_or_none, response_with_error_404
 from vans.services.van_services import VanService
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+
 
 class VansView(APIView):
     """Process the Van requests."""
 
     permission_classes = [IsAuthenticated | HasAPIKey]
 
+    @method_decorator(cache_page(60*15))
     def get(self, request):
         """Get all vans.
 
@@ -55,6 +59,7 @@ class VanView(APIView):
 
 	permission_classes = [IsAuthenticated | HasAPIKey]
 
+	@method_decorator(cache_page(60*15))
 	def get(self, request, uuid):
 		"""Gets the van detail.
 

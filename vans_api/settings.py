@@ -166,3 +166,23 @@ EMAIL_BACKEND = os.environ.get('DJANGO_EMAIL_BACKEND', default='django.core.mail
 EMAIL_HOST = 'mailhog'
 EMAIL_PORT = 1025  # Work with MailHog
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', default='Support <support@gmail.com>')
+
+# FIXTURE CONFIGURATION
+# ------------------------------------------------------------------------------
+FIXTURE_DIRS = (
+    join(BASE_DIR, 'fixtures'),
+)
+
+# CACHE
+
+REDIS_CACHE_URL = os.environ.get('REDIS_CACHE_URL', default='redis://redis:6379/0')
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': REDIS_CACHE_URL,
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+        "KEY_PREFIX": "broker",
+    },
+}
