@@ -1,0 +1,50 @@
+[
+	{
+		"model": "vans.status", 
+		"pk": "-YenQi-0r9i", 
+		"fields": {
+			"created_at": "2020-12-18T07:38:15.573Z", 
+			"modified_at": "2020-12-18T07:38:15.573Z", 
+			"code": "05", "name": "Ready For Street"
+		}
+	}, 
+	{
+		"model": "vans.status", 
+		"pk": "51DiTytgjNE", 
+		"fields": {
+			"created_at": "2020-12-18T07:36:11.068Z", 
+			"modified_at": "2020-12-18T07:38:29.026Z", 
+			"code": "02", "name": "In Maintenance"
+		}
+	}, 
+	{
+		"model": "vans.status", 
+		"pk": "GxRqTu55OW3", 
+		"fields": {
+			"created_at": "2020-12-18T07:35:37.444Z", 
+			"modified_at": "2020-12-18T07:35:37.444Z", 
+			"code": "01", 
+			"name": "Active"
+		}
+	}, 
+	{
+		"model": "vans.status", 
+		"pk": "lDvtQeYhdBJ", 
+		"fields": {
+			"created_at": "2020-12-18T07:36:54.881Z", 
+			"modified_at": "2020-12-18T07:37:52.213Z", 
+			"code": "03", 
+			"name": "Waiting For Review"
+		}
+	}, 
+	{
+		"model": "vans.status", 
+		"pk": "vJFKTmTFRI-", 
+		"fields": {
+			"created_at": "2020-12-18T07:37:08.810Z", 
+			"modified_at": "2020-12-18T07:37:08.811Z", 
+			"code": "04", 
+			"name": "Inactive"
+		}
+	}
+]
