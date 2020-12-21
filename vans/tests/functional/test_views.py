@@ -23,6 +23,10 @@ class VansTests(TestDoublesMixin, APITestCase):
         return reverse('api:v1:vans')
 
     @classmethod
+    def make_request_url_van(cls, van_uuid):
+        return reverse('api:v1:van', args=[van_uuid])
+
+    @classmethod
     def register_van_payload(cls, plates="AW3-150", economic_number="A1", seats=4, status="01"):
         return {
             "plates": plates,
@@ -31,7 +35,7 @@ class VansTests(TestDoublesMixin, APITestCase):
             "status": status
         }
 
-    ### GET vans
+    ### GET all vans
 
     def test_get_vans_credentials_required(self):
         request_url = self.make_request_url_vans()
@@ -52,6 +56,26 @@ class VansTests(TestDoublesMixin, APITestCase):
         self.assertEqual(len(vans_json), 1)
         van_response = vans_json[0]
         self.assertEqual(van_response['plates'], van.plates)
+
+    ### GET van
+
+    def test_get_van_detail_credentials_required(self):
+        request_url = self.make_request_url_van(van_uuid="fake_id")
+        self.assertAuthenticatedGET(request_url)
+
+    def test_get_van_detail(self):
+        van = VanFactory()
+        request_url = self.make_request_url_van(van_uuid=van.id)
+        response = self.get(
+            request_url,
+            is_authenticated=True,
+            use_api_key=True
+        )
+        van_json = response.json()
+
+        self.assertOk(response)
+        self.assertIsInstance(van_json, dict)
+        self.assertEqual(van_json['id'], van.id)
 
     ### POST van 
 
@@ -161,4 +185,3 @@ class VansTests(TestDoublesMixin, APITestCase):
         self.assertEquals(Van.objects.count(), 2)
         self.assertEquals(response_json['economic_number'], "A1-0002")
 
-    
