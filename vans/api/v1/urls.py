@@ -14,6 +14,6 @@ urlpatterns = [
     path(
         'vans/<str:uuid>',
         VanView.as_view(),
-        name='van-detail',
+        name='van',
     ),
 ]

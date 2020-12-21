@@ -34,7 +34,7 @@ urlpatterns = [
     #apps urls
     path('api/v1/', include('accounts.urls')),
     path('api/v1/', include('common.urls')),
-    path('api/', include('vans.api.urls')),
+    path('api/', include('vans.api.urls', namespace='api')),
 
     path('', index, name='index_view'),
 ]
