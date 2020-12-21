@@ -191,6 +191,18 @@ class VansTests(TestDoublesMixin, APITestCase):
         request_url = self.make_request_url_van(van_uuid="fake_id")
         self.assertAuthenticatedPUT(request_url)
 
+    def test_update_van_invalid_id(self):
+        request_url = self.make_request_url_van(van_uuid="fake_id")
+        response = self.put(
+            request_url,
+            is_authenticated=True,
+            use_api_key=True
+        )
+
+        errors = response.json()
+        self.assertNotFound(response)
+        self.assertEquals('Van Not Found', errors['error'])
+
     def test_update_van_parameters_missing(self):
         van = VanFactory()
         request_url = self.make_request_url_van(van_uuid=van.id)
@@ -203,3 +215,26 @@ class VansTests(TestDoublesMixin, APITestCase):
         errors = response.json()
         self.assertBadRequest(response)
         self.assertEquals({'plates', 'seats', 'status'}, set(errors.keys()))
+
+    def test_update_van(self):
+        van = VanFactory()
+        status = StatusFactory()
+        update_data = {
+            "plates": "BBB-001",
+            "seats": 18, 
+            "status": status.code
+        }
+        request_url = self.make_request_url_van(van_uuid=van.id)
+        response = self.put(
+            url=request_url,
+            data=update_data,
+            is_authenticated=True,
+            format='json',
+        )
+
+        response_json = response.json()
+        self.assertOk(response)
+        self.assertIsInstance(response_json, dict)
+        self.assertEquals(response_json['id'], van.id)
+        self.assertEquals(response_json['plates'], "BBB-001")
+        self.assertEquals(response_json['seats'], 18)
