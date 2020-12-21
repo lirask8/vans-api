@@ -33,4 +33,18 @@ class VansTests(TestDoublesMixin, APITestCase):
         request_url = self.make_request_url_vans()
         self.assertAuthenticatedGET(request_url)
 
-    
+    def test_get_vans(self):
+        van = VanFactory()
+        request_url = self.make_request_url_vans()
+        response = self.get(
+            request_url,
+            is_authenticated=True,
+            use_api_key=True
+        )
+        vans_json = response.json()
+
+        self.assertOk(response)
+        self.assertIsInstance(vans_json, list)
+        self.assertEqual(len(vans_json), 1)
+        van_response = vans_json[0]
+        self.assertEqual(van_response['plates'], van.plates)
