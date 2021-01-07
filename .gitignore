@@ -16,7 +16,7 @@ __pycache__/
 # Config files
 .environment
 .env
-.envs/
+#.envs/
 
 
 
