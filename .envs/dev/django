@@ -1,0 +1,5 @@
+DEBUG=1
+SECRET_KEY=fooKey14948$js987687b087y6iuy4567iv7otu7
+DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+SQL_ENGINE=django.db.backends.postgresql
+DATABASE=postgres
